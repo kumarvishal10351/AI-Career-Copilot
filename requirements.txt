@@ -1,0 +1,24 @@
+# ── Core ──────────────────────────────────────────────────────────────────────
+streamlit>=1.32.0
+
+# ── LLM & LangChain ───────────────────────────────────────────────────────────
+langchain>=0.1.16
+langchain-core>=0.1.42
+langchain-community>=0.0.32
+langchain-mistralai>=0.1.1
+
+# ── PDF parsing ───────────────────────────────────────────────────────────────
+pypdf>=4.0.0
+
+# ── PDF export ────────────────────────────────────────────────────────────────
+fpdf2>=2.7.9
+
+# ── Environment management ────────────────────────────────────────────────────
+python-dotenv>=1.0.0
+
+# ── Networking / retries (used by LangChain internally) ─────────────────────
+tenacity>=8.2.3
+httpx>=0.25.0
+
+# ── Typing (Python < 3.11 backports) ─────────────────────────────────────────
+typing-extensions>=4.9.0
