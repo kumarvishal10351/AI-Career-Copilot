@@ -10,20 +10,24 @@
 
 ---
 
+## 🚀 Live Demo
+
+[https://ai-career-copilot-lq62fsif5phtph2ccdxdte.streamlit.app/]
+
 ## ✨ Features
 
-| Feature | Description |
-|---|---|
-| 📊 **ATS Score** | Overall ATS compatibility score (0–100) |
-| 📋 **Section Breakdown** | Score per resume section: Experience, Skills, Education, Formatting, Keywords |
-| 🔍 **Skill Gap Analyser** | Visual diff of present vs missing skills |
-| 🎯 **Job Match %** | How well the resume matches the job description |
-| 🚀 **Smart Suggestions** | Prioritised (High/Medium/Low) improvement actions |
-| ✍️ **Resume Improvement** | Full ATS-optimised rewrite powered by Mistral AI |
-| 📥 **Export as PDF/TXT** | Download the improved resume in multiple formats |
-| 🎯 **Interview Prep** | 13 personalised questions (Technical + Behavioural + Scenario) |
-| 🕘 **Session History** | Track all analyses in the current session |
-| 🌐 **Multi-role Support** | 15 target roles including SWE, Data Science, ML, DevOps |
+| Feature                   | Description                                                                   |
+| ------------------------- | ----------------------------------------------------------------------------- |
+| 📊 **ATS Score**          | Overall ATS compatibility score (0–100)                                       |
+| 📋 **Section Breakdown**  | Score per resume section: Experience, Skills, Education, Formatting, Keywords |
+| 🔍 **Skill Gap Analyser** | Visual diff of present vs missing skills                                      |
+| 🎯 **Job Match %**        | How well the resume matches the job description                               |
+| 🚀 **Smart Suggestions**  | Prioritised (High/Medium/Low) improvement actions                             |
+| ✍️ **Resume Improvement** | Full ATS-optimised rewrite powered by Mistral AI                              |
+| 📥 **Export as PDF/TXT**  | Download the improved resume in multiple formats                              |
+| 🎯 **Interview Prep**     | 13 personalised questions (Technical + Behavioural + Scenario)                |
+| 🕘 **Session History**    | Track all analyses in the current session                                     |
+| 🌐 **Multi-role Support** | 15 target roles including SWE, Data Science, ML, DevOps                       |
 
 ---
 
@@ -149,35 +153,40 @@ services:
 
 ## ⚙️ Configuration
 
-| Variable | Required | Default | Description |
-|---|---|---|---|
-| `MISTRAL_API_KEY` | ✅ Yes | — | Your Mistral AI API key |
-| `MISTRAL_MODEL` | No | `mistral-small` | Override the model |
-| `DEBUG_LLM` | No | `false` | Enable verbose LLM logging |
+| Variable          | Required | Default         | Description                |
+| ----------------- | -------- | --------------- | -------------------------- |
+| `MISTRAL_API_KEY` | ✅ Yes   | —               | Your Mistral AI API key    |
+| `MISTRAL_MODEL`   | No       | `mistral-small` | Override the model         |
+| `DEBUG_LLM`       | No       | `false`         | Enable verbose LLM logging |
 
 ---
 
 ## 🧠 Architecture & Design Decisions
 
 ### LLM Output Strategy
+
 All LLM calls use **system + user** role separation. Analysis and interview features
 return **structured JSON** so the app can render rich UI components
 (skill tags, score bars, badges) rather than displaying raw text.
 
 ### Retry & Resilience
+
 `LLMService._invoke()` implements **exponential back-off** (up to 3 retries)
 so transient network errors don't crash the user session.
 
 ### Session State
+
 `utils/session_manager.py` centralises all `st.session_state` reads and writes.
 This prevents repeated LLM calls when switching tabs — results are cached in
 session until the user clicks **Re-analyse** or **Regenerate**.
 
 ### PDF Parsing
+
 `services/pdf_service.py` uses **pypdf** with graceful fallback messaging for
 encrypted or image-based PDFs that can't be parsed.
 
 ### Export
+
 `services/export_service.py` uses **fpdf2** with a fallback to Helvetica
 (Latin-1) if the Unicode font files aren't available in the deployment env.
 
